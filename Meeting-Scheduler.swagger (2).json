@@ -1,0 +1,763 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Meeting Scheduler",
+    "description": "Meeting Scheduler Connector",
+    "version": "1.0"
+  },
+  "host": "graph.microsoft.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [],
+  "produces": [],
+  "paths": {
+    "/v1.0/me/findMeetingTimes": {
+      "post": {
+        "responses": {
+          "default": {
+            "description": "default",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "@odata.context": {
+                  "type": "string",
+                  "description": "@odata.context"
+                },
+                "emptySuggestionsReason": {
+                  "type": "string",
+                  "description": "emptySuggestionsReason"
+                },
+                "meetingTimeSuggestions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "confidence": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "confidence",
+                        "title": ""
+                      },
+                      "order": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "order"
+                      },
+                      "organizerAvailability": {
+                        "type": "string",
+                        "description": "organizerAvailability"
+                      },
+                      "suggestionReason": {
+                        "type": "string",
+                        "description": "suggestionReason"
+                      },
+                      "attendeeAvailability": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "availability": {
+                              "type": "string",
+                              "description": "availability"
+                            },
+                            "attendee": {
+                              "type": "object",
+                              "properties": {
+                                "emailAddress": {
+                                  "type": "object",
+                                  "properties": {
+                                    "address": {
+                                      "type": "string",
+                                      "description": "address"
+                                    }
+                                  },
+                                  "description": "emailAddress"
+                                }
+                              },
+                              "description": "attendee"
+                            }
+                          }
+                        },
+                        "description": "attendeeAvailability"
+                      },
+                      "locations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "displayName": {
+                              "type": "string",
+                              "description": "displayName"
+                            }
+                          }
+                        },
+                        "description": "locations"
+                      },
+                      "meetingTimeSlot": {
+                        "type": "object",
+                        "properties": {
+                          "start": {
+                            "type": "object",
+                            "properties": {
+                              "dateTime": {
+                                "type": "string",
+                                "description": "dateTime"
+                              },
+                              "timeZone": {
+                                "type": "string",
+                                "description": "timeZone"
+                              }
+                            },
+                            "description": "start"
+                          },
+                          "end": {
+                            "type": "object",
+                            "properties": {
+                              "dateTime": {
+                                "type": "string",
+                                "description": "dateTime"
+                              },
+                              "timeZone": {
+                                "type": "string",
+                                "description": "timeZone"
+                              }
+                            },
+                            "description": "end"
+                          }
+                        },
+                        "description": "meetingTimeSlot"
+                      }
+                    }
+                  },
+                  "description": "meetingTimeSuggestions"
+                }
+              }
+            },
+            "headers": {
+              "Content-Type": {
+                "description": "Content-Type",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "summary": "Find Meeting Times",
+        "description": "Find Meeting Times",
+        "operationId": "FindMeetingTimes",
+        "parameters": [
+          {
+            "name": "Prefer",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "attendees": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "description": "type"
+                      },
+                      "emailAddress": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "name",
+                            "title": "Attendee Name"
+                          },
+                          "address": {
+                            "type": "string",
+                            "description": "address",
+                            "title": "Attendee Email Address"
+                          }
+                        },
+                        "description": "emailAddress"
+                      }
+                    }
+                  },
+                  "description": "attendees"
+                },
+                "locationConstraint": {
+                  "type": "object",
+                  "properties": {
+                    "isRequired": {
+                      "type": "string",
+                      "description": "isRequired"
+                    },
+                    "suggestLocation": {
+                      "type": "string",
+                      "description": "suggestLocation"
+                    },
+                    "locations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "resolveAvailability": {
+                            "type": "string",
+                            "description": "resolveAvailability"
+                          },
+                          "displayName": {
+                            "type": "string",
+                            "description": "displayName",
+                            "title": "Location Display Name"
+                          }
+                        }
+                      },
+                      "description": "locations"
+                    }
+                  },
+                  "description": "locationConstraint"
+                },
+                "timeConstraint": {
+                  "type": "object",
+                  "properties": {
+                    "activityDomain": {
+                      "type": "string",
+                      "description": "activityDomain",
+                      "title": "Activity Domain",
+                      "default": "work"
+                    },
+                    "timeSlots": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "start": {
+                            "type": "object",
+                            "properties": {
+                              "dateTime": {
+                                "type": "string",
+                                "description": "dateTime",
+                                "title": "Start Date Date Time"
+                              },
+                              "timeZone": {
+                                "type": "string",
+                                "description": "timeZone",
+                                "title": "Start Date Time Zone"
+                              }
+                            },
+                            "description": "start"
+                          },
+                          "end": {
+                            "type": "object",
+                            "properties": {
+                              "dateTime": {
+                                "type": "string",
+                                "description": "dateTime",
+                                "title": "End Date Date Time"
+                              },
+                              "timeZone": {
+                                "type": "string",
+                                "description": "timeZone",
+                                "title": "End Date Time Zone"
+                              }
+                            },
+                            "description": "end"
+                          }
+                        }
+                      },
+                      "description": "timeSlots"
+                    }
+                  },
+                  "description": "timeConstraint"
+                },
+                "isOrganizerOptional": {
+                  "type": "string",
+                  "description": "isOrganizerOptional"
+                },
+                "meetingDuration": {
+                  "type": "string",
+                  "description": "meetingDuration",
+                  "title": "Meeting Duration"
+                },
+                "returnSuggestionReasons": {
+                  "type": "string",
+                  "description": "returnSuggestionReasons"
+                },
+                "minimumAttendeePercentage": {
+                  "type": "integer",
+                  "description": "minimumAttendeePercentage",
+                  "title": "Minimum Attendee Percentage",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/v1.0/users/admin@M365x693159.onmicrosoft.com/calendar/events": {
+      "post": {
+        "responses": {
+          "default": {
+            "description": "default",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "@odata.context": {
+                  "type": "string",
+                  "description": "@odata.context"
+                },
+                "@odata.etag": {
+                  "type": "string",
+                  "description": "@odata.etag"
+                },
+                "id": {
+                  "type": "string",
+                  "description": "id"
+                },
+                "createdDateTime": {
+                  "type": "string",
+                  "description": "createdDateTime"
+                },
+                "lastModifiedDateTime": {
+                  "type": "string",
+                  "description": "lastModifiedDateTime"
+                },
+                "changeKey": {
+                  "type": "string",
+                  "description": "changeKey"
+                },
+                "categories": {
+                  "type": "array",
+                  "items": {},
+                  "description": "categories"
+                },
+                "originalStartTimeZone": {
+                  "type": "string",
+                  "description": "originalStartTimeZone"
+                },
+                "originalEndTimeZone": {
+                  "type": "string",
+                  "description": "originalEndTimeZone"
+                },
+                "iCalUId": {
+                  "type": "string",
+                  "description": "iCalUId"
+                },
+                "reminderMinutesBeforeStart": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "reminderMinutesBeforeStart"
+                },
+                "isReminderOn": {
+                  "type": "boolean",
+                  "description": "isReminderOn"
+                },
+                "hasAttachments": {
+                  "type": "boolean",
+                  "description": "hasAttachments"
+                },
+                "subject": {
+                  "type": "string",
+                  "description": "subject"
+                },
+                "bodyPreview": {
+                  "type": "string",
+                  "description": "bodyPreview"
+                },
+                "importance": {
+                  "type": "string",
+                  "description": "importance"
+                },
+                "sensitivity": {
+                  "type": "string",
+                  "description": "sensitivity"
+                },
+                "isAllDay": {
+                  "type": "boolean",
+                  "description": "isAllDay"
+                },
+                "isCancelled": {
+                  "type": "boolean",
+                  "description": "isCancelled"
+                },
+                "isOrganizer": {
+                  "type": "boolean",
+                  "description": "isOrganizer"
+                },
+                "responseRequested": {
+                  "type": "boolean",
+                  "description": "responseRequested"
+                },
+                "seriesMasterId": {
+                  "type": "string",
+                  "description": "seriesMasterId"
+                },
+                "showAs": {
+                  "type": "string",
+                  "description": "showAs"
+                },
+                "type": {
+                  "type": "string",
+                  "description": "type"
+                },
+                "webLink": {
+                  "type": "string",
+                  "description": "webLink"
+                },
+                "onlineMeetingUrl": {
+                  "type": "string",
+                  "description": "onlineMeetingUrl"
+                },
+                "isOnlineMeeting": {
+                  "type": "boolean",
+                  "description": "isOnlineMeeting"
+                },
+                "onlineMeetingProvider": {
+                  "type": "string",
+                  "description": "onlineMeetingProvider"
+                },
+                "allowNewTimeProposals": {
+                  "type": "boolean",
+                  "description": "allowNewTimeProposals"
+                },
+                "recurrence": {
+                  "type": "string",
+                  "description": "recurrence"
+                },
+                "responseStatus": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "string",
+                      "description": "response"
+                    },
+                    "time": {
+                      "type": "string",
+                      "description": "time"
+                    }
+                  },
+                  "description": "responseStatus"
+                },
+                "body": {
+                  "type": "object",
+                  "properties": {
+                    "contentType": {
+                      "type": "string",
+                      "description": "contentType"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "content"
+                    }
+                  },
+                  "description": "body"
+                },
+                "start": {
+                  "type": "object",
+                  "properties": {
+                    "dateTime": {
+                      "type": "string",
+                      "description": "dateTime"
+                    },
+                    "timeZone": {
+                      "type": "string",
+                      "description": "timeZone"
+                    }
+                  },
+                  "description": "start"
+                },
+                "end": {
+                  "type": "object",
+                  "properties": {
+                    "dateTime": {
+                      "type": "string",
+                      "description": "dateTime"
+                    },
+                    "timeZone": {
+                      "type": "string",
+                      "description": "timeZone"
+                    }
+                  },
+                  "description": "end"
+                },
+                "location": {
+                  "type": "object",
+                  "properties": {
+                    "displayName": {
+                      "type": "string",
+                      "description": "displayName"
+                    },
+                    "locationType": {
+                      "type": "string",
+                      "description": "locationType"
+                    },
+                    "uniqueId": {
+                      "type": "string",
+                      "description": "uniqueId"
+                    },
+                    "uniqueIdType": {
+                      "type": "string",
+                      "description": "uniqueIdType"
+                    }
+                  },
+                  "description": "location"
+                },
+                "locations": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "displayName": {
+                        "type": "string",
+                        "description": "displayName"
+                      },
+                      "locationType": {
+                        "type": "string",
+                        "description": "locationType"
+                      },
+                      "uniqueId": {
+                        "type": "string",
+                        "description": "uniqueId"
+                      },
+                      "uniqueIdType": {
+                        "type": "string",
+                        "description": "uniqueIdType"
+                      }
+                    }
+                  },
+                  "description": "locations"
+                },
+                "attendees": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "description": "type"
+                      },
+                      "status": {
+                        "type": "object",
+                        "properties": {
+                          "response": {
+                            "type": "string",
+                            "description": "response"
+                          },
+                          "time": {
+                            "type": "string",
+                            "description": "time"
+                          }
+                        },
+                        "description": "status"
+                      },
+                      "emailAddress": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "name"
+                          },
+                          "address": {
+                            "type": "string",
+                            "description": "address"
+                          }
+                        },
+                        "description": "emailAddress"
+                      }
+                    }
+                  },
+                  "description": "attendees"
+                },
+                "organizer": {
+                  "type": "object",
+                  "properties": {
+                    "emailAddress": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "description": "name"
+                        },
+                        "address": {
+                          "type": "string",
+                          "description": "address"
+                        }
+                      },
+                      "description": "emailAddress"
+                    }
+                  },
+                  "description": "organizer"
+                },
+                "onlineMeeting": {
+                  "type": "object",
+                  "properties": {
+                    "joinUrl": {
+                      "type": "string",
+                      "description": "joinUrl"
+                    },
+                    "conferenceId": {
+                      "type": "string",
+                      "description": "conferenceId"
+                    },
+                    "tollNumber": {
+                      "type": "string",
+                      "description": "tollNumber"
+                    }
+                  },
+                  "description": "onlineMeeting"
+                }
+              }
+            },
+            "headers": {
+              "Content-type": {
+                "description": "Content-type",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "summary": "Schedule Meeting",
+        "description": "Schedule Meeting",
+        "operationId": "ScheduleMeeting",
+        "parameters": [
+          {
+            "name": "Content-type",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "subject": {
+                  "type": "string",
+                  "description": "subject"
+                },
+                "body": {
+                  "type": "object",
+                  "properties": {
+                    "contentType": {
+                      "type": "string",
+                      "description": "contentType"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "content"
+                    }
+                  },
+                  "description": "body"
+                },
+                "start": {
+                  "type": "object",
+                  "properties": {
+                    "dateTime": {
+                      "type": "string",
+                      "description": "dateTime"
+                    },
+                    "timeZone": {
+                      "type": "string",
+                      "description": "timeZone"
+                    }
+                  },
+                  "description": "start"
+                },
+                "end": {
+                  "type": "object",
+                  "properties": {
+                    "dateTime": {
+                      "type": "string",
+                      "description": "dateTime"
+                    },
+                    "timeZone": {
+                      "type": "string",
+                      "description": "timeZone"
+                    }
+                  },
+                  "description": "end"
+                },
+                "location": {
+                  "type": "object",
+                  "properties": {
+                    "displayName": {
+                      "type": "string",
+                      "description": "displayName"
+                    }
+                  },
+                  "description": "location"
+                },
+                "attendees": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "emailAddress": {
+                        "type": "object",
+                        "properties": {
+                          "address": {
+                            "type": "string",
+                            "description": "address"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "name"
+                          }
+                        },
+                        "description": "emailAddress"
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "type"
+                      }
+                    }
+                  },
+                  "description": "attendees"
+                },
+                "isOnlineMeeting": {
+                  "type": "boolean",
+                  "description": "isOnlineMeeting"
+                },
+                "onlineMeetingProvider": {
+                  "type": "string",
+                  "description": "onlineMeetingProvider"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {},
+  "parameters": {},
+  "responses": {},
+  "securityDefinitions": {
+    "undefined": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "https://login.windows.net/common/oauth2/authorize",
+      "tokenUrl": "https://login.windows.net/common/oauth2/authorize",
+      "scopes": {}
+    }
+  },
+  "security": [
+    {
+      "undefined": []
+    }
+  ],
+  "tags": []
+}
